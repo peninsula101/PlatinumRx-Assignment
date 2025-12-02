@@ -2,7 +2,7 @@ Data Analyst Assignment
 
 This repository contains my complete solution for the Data Analyst – Round 1 Assignment, including SQL tasks, spreadsheet analysis, and Python scripts. The project follows the structure and requirements provided in the assignment document.
 
-📁 Project Structure
+##📁 Project Structure
 Data_Analyst_Assignment/
 │
 ├── SQL/
