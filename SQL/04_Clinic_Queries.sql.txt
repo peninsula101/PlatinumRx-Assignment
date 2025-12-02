@@ -1,0 +1,83 @@
+-- B1: Revenue from each sales_channel in a given year (2021)
+SELECT sales_channel, SUM(amount) AS total_revenue
+FROM clinic_sales
+WHERE EXTRACT(YEAR FROM datetime) = 2021
+GROUP BY sales_channel
+ORDER BY total_revenue DESC;
+
+-- B2: Top 10 most valuable customers for 2021
+SELECT uid, SUM(amount) AS total_spend
+FROM clinic_sales
+WHERE EXTRACT(YEAR FROM datetime) = 2021
+GROUP BY uid
+ORDER BY total_spend DESC
+LIMIT 10;
+
+-- B3: Month-wise revenue, expense, profit, status (for 2021)
+WITH rev AS (
+    SELECT DATE_TRUNC('month', datetime) AS month, SUM(amount) AS revenue
+    FROM clinic_sales
+    WHERE EXTRACT(YEAR FROM datetime) = 2021
+    GROUP BY 1
+),
+exp AS (
+    SELECT DATE_TRUNC('month', datetime) AS month, SUM(amount) AS expense
+    FROM expenses
+    WHERE EXTRACT(YEAR FROM datetime) = 2021
+    GROUP BY 1
+)
+SELECT r.month, COALESCE(r.revenue,0) AS revenue, COALESCE(e.expense,0) AS expense,
+       COALESCE(r.revenue,0) - COALESCE(e.expense,0) AS profit,
+       CASE WHEN COALESCE(r.revenue,0) - COALESCE(e.expense,0) > 0 THEN 'Profitable' ELSE 'Not Profitable' END AS status
+FROM rev r
+FULL OUTER JOIN exp e ON r.month = e.month
+ORDER BY r.month;
+
+-- B4: Most profitable clinic for each city for a given month (example: 2021-09)
+WITH monthly_rev AS (
+    SELECT c.city, cs.cid, DATE_TRUNC('month', cs.datetime) AS month, SUM(cs.amount) AS revenue
+    FROM clinic_sales cs JOIN clinics c ON cs.cid = c.cid
+    GROUP BY 1,2,3
+),
+monthly_exp AS (
+    SELECT cid, DATE_TRUNC('month', datetime) AS month, SUM(amount) AS expense
+    FROM expenses
+    GROUP BY 1,2
+),
+monthly AS (
+    SELECT mr.city, mr.cid, mr.month,
+           COALESCE(mr.revenue,0) - COALESCE(me.expense,0) AS profit
+    FROM monthly_rev mr
+    LEFT JOIN monthly_exp me ON mr.cid = me.cid AND mr.month = me.month
+)
+SELECT city, cid, month, profit
+FROM (
+    SELECT *, ROW_NUMBER() OVER (PARTITION BY city, month ORDER BY profit DESC) AS rn
+    FROM monthly
+) t
+WHERE rn = 1;
+
+-- B5: Second least profitable clinic for each state for a given month
+WITH monthly_rev AS (
+    SELECT c.state, cs.cid, DATE_TRUNC('month', cs.datetime) AS month, SUM(cs.amount) AS revenue
+    FROM clinic_sales cs JOIN clinics c ON cs.cid = c.cid
+    GROUP BY 1,2,3
+),
+monthly_exp AS (
+    SELECT cid, DATE_TRUNC('month', datetime) AS month, SUM(amount) AS expense
+    FROM expenses
+    GROUP BY 1,2
+),
+monthly AS (
+    SELECT mr.state, mr.cid, mr.month,
+           COALESCE(mr.revenue,0) - COALESCE(me.expense,0) AS profit
+    FROM monthly_rev mr
+    LEFT JOIN monthly_exp me ON mr.cid = me.cid AND mr.month = me.month
+)
+SELECT state, cid, month, profit
+FROM (
+    SELECT *, DENSE_RANK() OVER (PARTITION BY state, month ORDER BY profit ASC) AS rnk
+    FROM monthly
+) t
+WHERE rnk = 2
+ORDER BY state, month;

@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+"""
+02_Remove_Duplicates.py
+Removes duplicate characters from a string, preserving first occurrence order.
+"""
+
+def remove_duplicates(s: str) -> str:
+    if not isinstance(s, str):
+        raise TypeError("Input must be a string.")
+    seen = set()
+    out_chars = []
+    for ch in s:
+        if ch not in seen:
+            seen.add(ch)
+            out_chars.append(ch)
+    return ''.join(out_chars)
+
+# quick tests
+if __name__ == "__main__":
+    '''tests = ["mississippi", "aabbcc", "", "abc", "AaAa"]
+    for t in tests:
+        print(f"'{t}' -> '{remove_duplicates(t)}'")
+    '''
+    test = input()
+    print(remove_duplicates(test))

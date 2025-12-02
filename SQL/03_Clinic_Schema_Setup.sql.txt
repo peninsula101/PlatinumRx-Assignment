@@ -1,0 +1,52 @@
+
+CREATE TABLE clinics (
+    cid VARCHAR(50) PRIMARY KEY,
+    clinic_name VARCHAR(200),
+    city VARCHAR(100),
+    state VARCHAR(100),
+    country VARCHAR(100)
+);
+
+CREATE TABLE customer (
+    uid VARCHAR(50) PRIMARY KEY,
+    name VARCHAR(200),
+    mobile VARCHAR(20)
+);
+
+CREATE TABLE clinic_sales (
+    oid VARCHAR(50) PRIMARY KEY,
+    uid VARCHAR(50),
+    cid VARCHAR(50),
+    amount NUMERIC(12,2),
+    datetime TIMESTAMP,
+    sales_channel VARCHAR(100),
+    FOREIGN KEY (uid) REFERENCES customer(uid),
+    FOREIGN KEY (cid) REFERENCES clinics(cid)
+);
+
+CREATE TABLE expenses (
+    eid VARCHAR(50) PRIMARY KEY,
+    cid VARCHAR(50),
+    description TEXT,
+    amount NUMERIC(12,2),
+    datetime TIMESTAMP,
+    FOREIGN KEY (cid) REFERENCES clinics(cid)
+);
+
+
+INSERT INTO clinics VALUES
+('cnc-0100001','XYZ clinic','Mumbai','Maharashtra','India'),
+('cnc-0100002','ABC clinic','Pune','Maharashtra','India');
+
+INSERT INTO customer VALUES
+('bk-09f3e-95hj','Jon Doe','9799999999'),
+('bk-09f3e-95hk','Jane Roe','9888888888');
+
+INSERT INTO clinic_sales VALUES
+('ord-00100-00100','bk-09f3e-95hj','cnc-0100001',24999,'2021-09-23 12:03:22','online'),
+('ord-00200-00101','bk-09f3e-95hk','cnc-0100002',5000,'2021-09-25 10:00:00','walk-in'),
+('ord-00300-00102','bk-09f3e-95hj','cnc-0100001',15000,'2021-10-05 11:11:11','online');
+
+INSERT INTO expenses VALUES
+('exp-0100-00100','cnc-0100001','first-aid supplies',557,'2021-09-23 07:36:48'),
+('exp-0100-00101','cnc-0100002','rent',5000,'2021-09-01 00:00:00');

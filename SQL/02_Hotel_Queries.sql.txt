@@ -1,0 +1,72 @@
+SELECT user_id, room_no
+FROM (
+    SELECT user_id, room_no, booking_date,
+           ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY booking_date DESC) AS rn
+    FROM bookings
+) t
+WHERE rn = 1;
+
+-- Q2: booking_id and total billing amount of bookings in November 2021
+SELECT bc.booking_id,
+       SUM(bc.item_quantity * i.item_rate) AS total_amount
+FROM booking_commercials bc
+JOIN items i ON bc.item_id = i.item_id
+JOIN bookings b ON bc.booking_id = b.booking_id
+WHERE b.booking_date >= '2021-11-01'
+  AND b.booking_date < '2021-12-01'
+GROUP BY bc.booking_id;
+
+-- Q3: bill_id and bill amount of bills in Oct 2021 with amount > 1000
+SELECT bill_id,
+       SUM(item_quantity * i.item_rate) AS bill_amount
+FROM booking_commercials bc
+JOIN items i ON bc.item_id = i.item_id
+WHERE bill_date >= '2021-10-01'
+  AND bill_date < '2021-11-01'
+GROUP BY bill_id
+HAVING SUM(item_quantity * i.item_rate) > 1000;
+
+-- Q4: most and least ordered item of each month in 2021
+WITH monthly AS (
+    SELECT DATE_TRUNC('month', bill_date) AS month,
+           item_id,
+           SUM(item_quantity) AS total_qty
+    FROM booking_commercials
+    WHERE bill_date >= '2021-01-01' AND bill_date < '2022-01-01'
+    GROUP BY 1,2
+),
+ranked AS (
+    SELECT *,
+        RANK() OVER (PARTITION BY month ORDER BY total_qty DESC) AS r_max,
+        RANK() OVER (PARTITION BY month ORDER BY total_qty ASC) AS r_min
+    FROM monthly
+)
+SELECT month, item_id, total_qty,
+       CASE WHEN r_max = 1 THEN 'Most Ordered'
+            WHEN r_min = 1 THEN 'Least Ordered'
+       END AS category
+FROM ranked
+WHERE r_max = 1 OR r_min = 1
+ORDER BY month;
+
+-- Q5: customers with second highest bill value each month of 2021
+WITH bill_months AS (
+    SELECT DATE_TRUNC('month', bill_date) AS month,
+           bc.bill_id,
+           b.user_id,
+           SUM(bc.item_quantity * i.item_rate) AS bill_value
+    FROM booking_commercials bc
+    JOIN items i ON bc.item_id = i.item_id
+    JOIN bookings b ON bc.booking_id = b.booking_id
+    WHERE bill_date >= '2021-01-01' AND bill_date < '2022-01-01'
+    GROUP BY 1,2,3
+),
+ranked AS (
+    SELECT *,
+        DENSE_RANK() OVER (PARTITION BY month ORDER BY bill_value DESC) AS rnk
+    FROM bill_months
+)
+SELECT month, bill_id, user_id, bill_value
+FROM ranked
+WHERE rnk = 2
+ORDER BY month;

@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+"""
+01_Time_Converter.py
+Converts minutes (int) to human readable string: "X hrs Y minutes"
+Handles negative and large values.
+"""
+
+def convert_minutes(total_minutes: int) -> str:
+    if not isinstance(total_minutes, int):
+        raise TypeError("Input must be integer minutes.")
+    if total_minutes < 0:
+        raise ValueError("Minutes cannot be negative.")
+    hrs = total_minutes // 60
+    mins = total_minutes % 60
+    hr_label = "hr" if hrs == 1 else "hrs"
+    min_label = "minute" if mins == 1 else "minutes"
+    if hrs == 0:
+        return f"{mins} {min_label}"
+    if mins == 0:
+        return f"{hrs} {hr_label}"
+    return f"{hrs} {hr_label} {mins} {min_label}"
+
+# quick tests
+if __name__ == "__main__":
+    '''
+    examples = [130, 110, 1, 60, 0]
+    for e in examples:
+        print(e, "->", convert_minutes(e))
+    '''
+    time = int(input())
+    print(convert_minutes(time))
+    
