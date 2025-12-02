@@ -20,6 +20,7 @@ Data_Analyst_Assignment/
 │
 └── README.md
 
+
 🧠 Summary of My Approach
 1. SQL
 
