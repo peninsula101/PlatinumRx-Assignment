@@ -1,4 +1,4 @@
-Data Analyst Assignment
+Data Analyst Assignment by Sri Charana sai kireeti thallam venkata
 
 This repository contains my complete solution for the Data Analyst – Round 1 Assignment, including SQL tasks, spreadsheet analysis, and Python scripts. The project follows the structure and requirements provided in the assignment document.
 
