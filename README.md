@@ -1,74 +1,74 @@
-Data Analyst Assignment by Sri Charana sai kireeti thallam venkata
+Data Analyst Assignment by Sri Charana sai Kireeti Thallam Venkata <br>
 
-This repository contains my complete solution for the Data Analyst – Round 1 Assignment, including SQL tasks, spreadsheet analysis, and Python scripts. The project follows the structure and requirements provided in the assignment document.
+This repository contains my complete solution for the Data Analyst – Round 1 Assignment, including SQL tasks, spreadsheet analysis, and Python scripts. The project follows the structure and requirements provided in the assignment document. <br>
 
-##📁 Project Structure
-Data_Analyst_Assignment/
+##📁 Project Structure <br>
+Data_Analyst_Assignment/ <br>
 │
-├── SQL/
-│   ├── 01_Hotel_Schema_Setup.sql
-│   ├── 02_Hotel_Queries.sql
-│   ├── 03_Clinic_Schema_Setup.sql
-│   └── 04_Clinic_Queries.sql
+├── SQL/ <br>
+│   ├── 01_Hotel_Schema_Setup.sql <br>
+│   ├── 02_Hotel_Queries.sql <br>
+│   ├── 03_Clinic_Schema_Setup.sql <br>
+│   └── 04_Clinic_Queries.sql <br>
 │
-├── Spreadsheets/
-│   └── Ticket_Analysis.xlsx
+├── Spreadsheets/ <br>
+│   └── Ticket_Analysis.xlsx <br>
 │
-├── Python/
-│   ├── 01_Time_Converter.py
-│   └── 02_Remove_Duplicates.py
+├── Python/ <br>
+│   ├── 01_Time_Converter.py <br>
+│   └── 02_Remove_Duplicates.py <br>
 │
-└── README.md
+└── README.md <br>
 
 
-🧠 Summary of My Approach
-1. SQL
+🧠 Summary of My Approach <br>
+1. SQL <br>
 
-Designed schema for both Hotel and Clinic systems.
+Designed schema for both Hotel and Clinic systems. <br>
 
-Inserted sample data to validate logic.
+Inserted sample data to validate logic. <br>
 
-Used joins, aggregations, date filters, and window functions to answer all analytical questions.
+Used joins, aggregations, date filters, and window functions to answer all analytical questions. <br>
 
-Executed and tested using PostgreSQL (DB Fiddle).
+Executed and tested using PostgreSQL (DB Fiddle). <br>
 
-2. Spreadsheets
+2. Spreadsheets <br> 
 
-Created two sheets: ticket and feedbacks.
+Created two sheets: ticket and feedbacks. <br>
 
-Populated ticket_created_at using lookup formulas.
+Populated ticket_created_at using lookup formulas. <br>
 
-Added helper columns (same_day?, same_hour?) to analyze ticket timings.
+Added helper columns (same_day?, same_hour?) to analyze ticket timings. <br>
 
-Generated outlet-wise counts using COUNTIFS formulas and a summary sheet.
+Generated outlet-wise counts using COUNTIFS formulas. <br>
 
-3. Python
+3. Python <br>
 
-Script 1: Converts minutes into a readable time format (X hrs Y minutes).
+Script 1: Converts minutes into a readable time format (X hrs Y minutes). <br>
 
-Script 2: Removes duplicate characters from a string using a loop.
+Script 2: Removes duplicate characters from a string using a loop. <br>
 
-📝 Assumptions
+📝 Assumptions <br>
 
-cms_id uniquely links ticket and feedback data.
+cms_id uniquely links ticket and feedback data. <br> 
 
-All timestamps are valid and correctly formatted.
+All timestamps are valid and correctly formatted. <br>
 
-PostgreSQL syntax is used for all SQL queries.
+PostgreSQL syntax is used for all SQL queries. <br> 
 
-Python scripts assume clean and valid input.
+Python scripts assume clean and valid input. <br>
 
-▶️ How to Run
-SQL
+▶️ How to Run <br>
+SQL <br>
 
-Run schema files first, then run each query file in any PostgreSQL environment or DB Fiddle.
+Run schema files first, then run each query file in any PostgreSQL environment or DB Fiddle. <br>
 
-Spreadsheet
+Spreadsheet <br>
 
-Open the Excel file and review the computed columns and summary output.
+Open the Excel file and review the computed columns and summary output. <br>
 
-Python
+Python <br>
 
-Run using Python 3:
+Run using Python 3: <br>
 
 python <script_name>.py
