@@ -1,9 +1,6 @@
-#!/usr/bin/env python3
-"""
-01_Time_Converter.py
-Converts minutes (int) to human readable string: "X hrs Y minutes"
-Handles negative and large values.
-"""
+
+01 Converts minutes (int) to human readable string: "X hrs Y minutes"
+
 
 def convert_minutes(total_minutes: int) -> str:
     if not isinstance(total_minutes, int):
