@@ -1,8 +1,6 @@
-#!/usr/bin/env python3
-"""
-02_Remove_Duplicates.py
-Removes duplicate characters from a string, preserving first occurrence order.
-"""
+
+#02 Removes duplicate characters from a string, preserving first occurrence order.
+
 
 def remove_duplicates(s: str) -> str:
     if not isinstance(s, str):
