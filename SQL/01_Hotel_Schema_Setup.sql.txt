@@ -33,7 +33,7 @@ CREATE TABLE booking_commercials (
     FOREIGN KEY (item_id) REFERENCES items(item_id)
 );
 
--- Sample data (minimal) for testing
+-- Sample data for testing
 INSERT INTO users VALUES
 ('21wrcxuy-67erfn','John Doe','9799999999','john.doe@example.com','XX, Street Y, ABC City');
 
