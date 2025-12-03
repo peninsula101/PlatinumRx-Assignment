@@ -1,5 +1,5 @@
 
-01 Converts minutes (int) to human readable string: "X hrs Y minutes"
+#01 Converts minutes (int) to human readable string: "X hrs Y minutes"
 
 
 def convert_minutes(total_minutes: int) -> str:
